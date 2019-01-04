@@ -1,4 +1,4 @@
 Usage:
-ruby profitero.rb <url> <output_file>
+ruby profitero.rb http://url.com/ out.csv
   (Any category can be parsed.)
  
