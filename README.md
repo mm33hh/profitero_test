@@ -1,6 +1,10 @@
-Usage:
-ruby profitero.rb http://url.com/ out.csv
-  (Any category can be parsed.)
+## Test task. Web scraper with random User-Agent header and random proxy.
+```ruby 
+ruby profitero.rb <url> <output file> --proxy --verbose
+```
+
+To use with proxy put list of your proxies to proxy.txt if you don't want to, just don't pass the argument. "--verbose" argument switches curb gem to verbose mode. 
+
 Some videos:
 https://youtu.be/6dM0hnaDFZA
 https://youtu.be/ybwhpVz60yE
