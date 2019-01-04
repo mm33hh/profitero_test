@@ -20,10 +20,30 @@ end
 if ARGV[0].include?("nuevos-productos")
 	link = ARGV[0]
 end
+#To hide our activity lets fake user-agets and use proxy to hide my ip
+if ARGV.include?('--proxy')
+	proxy = File.readlines('./proxy.txt')
+else
+	proxy = []
+end
+
+if ARGV.include?('--verbose')
+	ver = true
+else
+	ver = false
+end
 
 out  = ARGV[1]
 
-html = Curl.get(link)
+#Get fake User-Agents and fake referers
+agents = File.readlines('./user-agents.txt')
+#refs = File.readlines('./referers.txt')
+
+html = Curl.get(link) do |c|
+	c.proxy_url = proxy.sample
+	c.headers['User-Agent'] = agents.sample.strip
+	c.verbose = ver
+end
 
 parsed_data = Nokogiri::HTML.parse(html.body)
 
@@ -47,9 +67,17 @@ urls = []
 [*1..max_page].each do |x|
 	if link.include?("nuevos-productos")
 		#All links (does not matter if it has several pages or not) can get /?p= parameter, but Novedades returns 404 error
-		curl = Curl.get("#{link}")
+		curl = Curl.get("#{link}") do |c|
+			c.proxy_url = proxy.sample
+			c.headers['User-Agent'] = agents.sample.strip
+			c.verbose = ver
+		end
 	else
-		curl = Curl.get("#{link}?p=#{x}")
+		curl = Curl.get("#{link}?p=#{x}") do |c|
+			c.proxy_url = proxy.sample
+			c.headers['User-Agent'] = agents.sample.strip
+			c.verbose = ver
+		end
 	end
 	data = Nokogiri::HTML.parse(curl.body)
 	#We need to get all the products from each page
@@ -63,7 +91,11 @@ print "Go! "
 urls.each do |x|
 	prod = {}
 	#threads << Thread.new{
-	curl = Curl.get(x)
+	curl = Curl.get(x) do |c|
+		c.proxy_url = proxy.sample
+		c.headers['User-Agent'] = agents.sample.strip
+		c.verbose = ver
+	end
 	data = Nokogiri::HTML.parse(curl.body)
 	name = data.xpath("//*[contains(@class, 'product_main_name')]").first.text
 	img = data.xpath("//img[@id='bigpic']/@src").to_s
@@ -95,7 +127,11 @@ if errors.count > 0
 	counter = 0
 	errors.each do |x|
 		prod = {}
-		curl = Curl.get(x)
+		curl = Curl.get(x) do |c|
+			c.proxy_url = proxy.sample
+			c.headers['User-Agent'] = agents.sample.strip
+			c.verbose = ver
+		end
 		data = Nokogiri::HTML.parse(curl.body)
 		name = data.xpath("//*[contains(@class, 'product_main_name')]").first.text
 		img = data.xpath("//img[@id='bigpic']/@src").to_s
@@ -131,4 +167,3 @@ CSV.open("#{out}", 'w') do |c|
 			end
 		end
 end
-puts "The End"
