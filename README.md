@@ -22,10 +22,15 @@ Check it manually for more info...
 Trying another method for bad URLs...
 Nice...we got them all
 Writing output to snacks-huesos-para-perros.csv
-
-
 ```
+Made just without any special dependencies!<br />
+To do: <br />
+- Make it async and faster
+- Make it possible to provide more links to parse 
+- Output file versioning not to override existing data
+- Make it more "stealth" with random referer header (dig deeper to find out what requests accepts this shop)
+- Make better looking using tty gem 
 
 Some videos:
-https://youtu.be/6dM0hnaDFZA
-https://youtu.be/ybwhpVz60yE
+https://youtu.be/6dM0hnaDFZA <br />
+https://youtu.be/ybwhpVz60yE <br />
