@@ -20,7 +20,7 @@ end
 if ARGV[0].include?("nuevos-productos")
 	link = ARGV[0]
 end
-#To hide our activity lets fake user-agets and use proxy to hide my ip
+#To hide our activity lets fake user-agets and use proxy to ip
 if ARGV.include?('--proxy')
 	proxy = File.readlines('./proxy.txt')
 else
@@ -35,9 +35,8 @@ end
 
 out  = ARGV[1]
 
-#Get fake User-Agents and fake referers
+#Get fake User-Agents
 agents = File.readlines('./user-agents.txt')
-#refs = File.readlines('./referers.txt')
 
 html = Curl.get(link) do |c|
 	c.proxy_url = proxy.sample
@@ -89,7 +88,6 @@ arr = []
 puts "[i] We got #{urls.count} URLS to parse..."
 print "Go! "
 urls.reverse.each do |x|
-	#threads << Thread.new{
 	curl = Curl.get(x) do |c|
 		c.proxy_url = proxy.sample
 		c.headers['User-Agent'] = agents.sample.strip
