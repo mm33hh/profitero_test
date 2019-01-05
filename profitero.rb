@@ -87,7 +87,7 @@ errors = []
 arr = []
 puts "[i] We got #{urls.count} URLS to parse..."
 print "Go! "
-urls.reverse.each do |x|
+urls.each do |x|
 	curl = Curl.get(x) do |c|
 		c.proxy_url = proxy.sample
 		c.headers['User-Agent'] = agents.sample.strip
