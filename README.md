@@ -8,9 +8,12 @@ To use with proxy put list of your proxies to proxy.txt if you don't want to, ju
 As I noticed some of the product pages are not coded as the vast majority of product pages on the website, so if script catches any errors while parsing, it checks it for both page styles. As well we can parse https://www.petsonic.com/nuevos-productos (New Products)...that was a little bit tricky
 
 ```
+$ ruby profitero.rb https://www.petsonic.com/snacks-huesos-para-perros/ snacks-huesos-para-perros.csv
 [i] Found 11 pages of products. Let's begin...
 [i] We got 241 URLS to parse...
-Go! =============================================================================================================================================================================================================================================================================================================================================> DONE!
+Go! ===============================================================================================================================
+===============================================================================================================================
+===============================================================================> DONE!
 Parsed Links: 241 | Products: 333 | Errors: 2
 Errors:
 https://www.petsonic.com/nayeco-35-und-nervio-bovino-para-perros.html
@@ -19,6 +22,7 @@ Check it manually for more info...
 Trying another method for bad URLs...
 Nice...we got them all
 Writing output to snacks-huesos-para-perros.csv
+
 
 ```
 
