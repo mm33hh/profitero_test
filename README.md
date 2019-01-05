@@ -31,6 +31,3 @@ To do: <br />
 - Make it more "stealth" with random referer header (dig deeper to find out what requests accepts this shop)
 - Make better looking using tty gem 
 
-Some videos:<br />
-https://youtu.be/6dM0hnaDFZA <br />
-https://youtu.be/ybwhpVz60yE <br />
