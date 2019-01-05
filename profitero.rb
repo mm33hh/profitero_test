@@ -88,8 +88,7 @@ errors = []
 arr = []
 puts "[i] We got #{urls.count} URLS to parse..."
 print "Go! "
-urls.each do |x|
-	prod = {}
+urls.reverse.each do |x|
 	#threads << Thread.new{
 	curl = Curl.get(x) do |c|
 		c.proxy_url = proxy.sample
@@ -101,23 +100,23 @@ urls.each do |x|
 	img = data.xpath("//img[@id='bigpic']/@src").to_s
 	weight = data.xpath("//span[@class='radio_label']")
 	price = data.xpath("//span[@class='price_comb']")
-	weight.to_a.each_index do |i|
-		if not name.strip == '' or weight[i].text.strip == '' or price[i].text.strip == ''
+	if not weight.text.empty? && price.text.empty?
+		weight.to_a.each_index do |i|
+			prod = {}
 			prod[:name] = name.strip
 			prod[:img] = img
 			prod[:weight] = weight[i].text
 			prod[:price] = price[i].text.to_f
 			print "="
+			arr << prod
 		end
-	end
-	if prod == {}
-		errors << curl.url
 	else
-		arr << prod
+		errors << curl.url
 	end
+	
 end
 print "> DONE!\n"
-puts "Parsed: #{urls.count} | Success: #{arr.uniq.count} | Errors: #{errors.count}"
+puts "Parsed Links: #{urls.count} | Products: #{arr.uniq.count} | Errors: #{errors.count}"
 new_arr = []
 if errors.count > 0
 	puts "Errors:"
@@ -136,12 +135,11 @@ if errors.count > 0
 		name = data.xpath("//*[contains(@class, 'product_main_name')]").first.text
 		img = data.xpath("//img[@id='bigpic']/@src").to_s
 		price = data.xpath("//*[contains(@class,'our_price_display fl')]").text
-		if not name.strip == '' or price[i].text.strip == ''
+		if not price.empty?
 			prod[:name] = name.strip
 			prod[:img] = img
 			prod[:price] = price.to_f
 			prod[:weight] = "none"
-			#puts prod
 			new_arr << prod
 			counter += 1
 		end
