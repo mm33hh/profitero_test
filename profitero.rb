@@ -20,7 +20,7 @@ end
 if ARGV[0].include?("nuevos-productos")
 	link = ARGV[0]
 end
-#To hide our activity lets fake user-agets and use proxy to ip
+#To hide our activity lets fake user-agents and use proxy to hide ip
 if ARGV.include?('--proxy')
 	proxy = File.readlines('./proxy.txt')
 else
