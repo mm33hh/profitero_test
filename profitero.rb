@@ -101,7 +101,7 @@ urls.each do |x|
 	if not weight.text.empty? && price.text.empty?
 		weight.to_a.each_index do |i|
 			prod = {}
-			prod[:name] = name.strip.gsub('"')
+			prod[:name] = name.strip
 			prod[:img] = img
 			prod[:weight] = weight[i].text
 			prod[:price] = price[i].text.to_f
@@ -134,7 +134,7 @@ if errors.count > 0
 		img = data.xpath("//img[@id='bigpic']/@src").to_s
 		price = data.xpath("//*[contains(@class,'our_price_display fl')]").text
 		if not price.empty?
-			prod[:name] = name.strip.gsub('"')
+			prod[:name] = name.strip
 			prod[:img] = img
 			prod[:price] = price.to_f
 			prod[:weight] = "none"
